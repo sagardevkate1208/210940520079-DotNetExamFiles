@@ -19,8 +19,8 @@ namespace MVCApplicationExam.Controllers
             cn.Open();
             SqlCommand cmdInsert = new SqlCommand();
             cmdInsert.Connection = cn;
-            cmdInsert.CommandType = System.Data.CommandType.Text;
-            cmdInsert.CommandText = "select * from Products";
+            cmdInsert.CommandType = System.Data.CommandType.StoredProcedure;
+            cmdInsert.CommandText = "VPRODUCTS";
             SqlDataReader dr = cmdInsert.ExecuteReader();
             while (dr.Read())
             {
@@ -54,27 +54,7 @@ namespace MVCApplicationExam.Controllers
         {
             try
             {
-                SqlConnection conn = new SqlConnection();
-                conn.ConnectionString = @"Data Source =(localdb)\MSSQLLocalDB;Initial Catalog=PracticeQQ3;Integrated Security=True;Connect Timeout=30";
-                conn.Open();
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = conn;
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.CommandText = "addprod";
-                cmd.Parameters.AddWithValue("@ProductId", pr.ProductId);
-                cmd.Parameters.AddWithValue("@ProductName", pr.ProductName);
-                cmd.Parameters.AddWithValue("@Rate", pr.Rate);
-                cmd.Parameters.AddWithValue("@Description", pr.Description);
-                cmd.Parameters.AddWithValue("@CategoryName", pr.CategoryName);
-                try
-                {
-                    cmd.ExecuteNonQuery();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-
+                // TODO: Add insert logic here
 
                 return RedirectToAction("Index");
             }
@@ -82,6 +62,7 @@ namespace MVCApplicationExam.Controllers
             {
                 return View();
             }
+
         }
 
         // GET: Products/Edit/5
@@ -121,8 +102,8 @@ namespace MVCApplicationExam.Controllers
                     cn.Open();
                     SqlCommand sqlcm = new SqlCommand();
                     sqlcm.Connection = cn;
-                    sqlcm.CommandType = System.Data.CommandType.Text;
-                    sqlcm.CommandText = "Update Products set ProductName=@ProductName,Rate=@Rate,Description=@Description,CategoryName=@CategoryName where ProductId=@ProductId";
+                    sqlcm.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlcm.CommandText = "editproductusingID";
                     sqlcm.Parameters.AddWithValue("@ProductId", id);
                     sqlcm.Parameters.AddWithValue("@ProductName", product.ProductName);
                     sqlcm.Parameters.AddWithValue("@Rate", product.Rate);
@@ -166,3 +147,4 @@ namespace MVCApplicationExam.Controllers
         }
     }
 }
+
